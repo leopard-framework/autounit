@@ -15,18 +15,30 @@ import javassist.util.proxy.MethodHandler;
  */
 public class AutoUnit {
 
-	public static <T> T dao(T bean) {
-		MethodHandler methodHandler = new MethodHandlerImpl(bean);
-		@SuppressWarnings("unchecked")
-		Class<T> clazz = (Class<T>) bean.getClass();
+	public static <T> T mock(Class<T> clazz) {
 		Inject inject = new InjectImpl();
-
+		T bean;
+		try {
+			bean = clazz.newInstance();
+		}
+		catch (InstantiationException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		catch (IllegalAccessException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 		Field[] fields = clazz.getDeclaredFields();
 		for (Field field : fields) {
 			inject.inject(bean, field);
 		}
+		return bean;
+	}
+
+	public static <T> T dao(T bean) {
+		@SuppressWarnings("unchecked")
+		Class<T> clazz = (Class<T>) bean.getClass();
+		MethodHandler methodHandler = new MethodHandlerImpl(bean);
 		T proxy = ClassProxy.newProxyInstance(clazz, methodHandler);
 		return proxy;
 	}
-
 }

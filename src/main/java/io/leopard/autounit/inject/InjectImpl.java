@@ -17,7 +17,7 @@ public class InjectImpl implements Inject {
 
 	public InjectImpl() {
 		List<Inject> ruleList = this.listCustomRule();
-		System.out.println("ruleList:" + ruleList);
+		// System.out.println("ruleList:" + ruleList);
 		list.addAll(ruleList);
 		this.list.add(new InjectJdbcImpl());
 	}

@@ -37,7 +37,7 @@ public class AutounitProperties {
 				return (order1 - order2);
 			}
 		});
-		System.err.println("list:" + list);
+		// System.err.println("list:" + list);
 
 		return list;
 	}
@@ -54,7 +54,7 @@ public class AutounitProperties {
 		List<InputStream> list = new ArrayList<InputStream>();
 		while (e.hasMoreElements()) {
 			URL url = e.nextElement();
-			System.out.println("url:" + url);
+			// System.out.println("url:" + url);
 			list.add(toInputStream(url));
 		}
 		return list;

@@ -10,15 +10,6 @@ import java.lang.reflect.Method;
  */
 public interface MethodRule {
 
-	void start();
-
-	/**
-	 * 是否已检查.
-	 * 
-	 * @return
-	 */
-	boolean isChecked();
-
 	/**
 	 * 方法验证.
 	 * 
@@ -29,5 +20,5 @@ public interface MethodRule {
 	 * @return
 	 * @throws Exception
 	 */
-	Object invoke(Object bean, Method method, String[] names, Object[] args) throws Exception;
+	RuleState invoke(Object bean, Method method, String[] names, Object[] args, RuleStateChain ruleStateChain) throws Exception;
 }

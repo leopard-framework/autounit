@@ -1,7 +1,9 @@
 package io.leopard.autounit;
 
-import io.leopard.autounit.rule.MethodRuleImpl;
 import io.leopard.autounit.rule.MethodRule;
+import io.leopard.autounit.rule.MethodRuleImpl;
+import io.leopard.autounit.rule.RuleState;
+import io.leopard.autounit.rule.RuleStateChain;
 
 import java.lang.reflect.Method;
 
@@ -19,7 +21,8 @@ public class MethodHandlerImpl implements MethodHandler {
 	@Override
 	public Object invoke(Object self, Method thisMethod, Method proceed, Object[] args) throws Throwable {
 		String[] names = CtClassUtil.getParameterNames(thisMethod);
-		return methodRule.invoke(bean, thisMethod, names, args);
+		RuleState state = methodRule.invoke(bean, thisMethod, names, args, new RuleStateChain());
+		return state.getResult();
 	}
 
 	//

@@ -5,17 +5,14 @@ import java.lang.reflect.Method;
 public class MethodRuleIGetImpl extends AbstractMethodRule {
 
 	@Override
-	public Object invoke(Object bean, Method method, String[] names, Object[] args) throws Exception {
+	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, RuleStateChain ruleStateChain) throws Exception {
 		if (!method.getName().equals("get")) {
 			return null;
 		}
 
-		// if (!isAssignableFrom(bean, "IGet")) {
-		// return null;
-		// }
+		Object result = method.invoke(bean, args);
 
-		this.checked = true;
-		return method.invoke(bean, args);
+		return new RuleState(this, result);
 	}
 
 }

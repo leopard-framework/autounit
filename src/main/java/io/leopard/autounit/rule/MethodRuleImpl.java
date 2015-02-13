@@ -10,28 +10,23 @@ public class MethodRuleImpl implements MethodRule {
 
 	public MethodRuleImpl() {
 		list.add(new MethodRuleIGetImpl());
+		list.add(new MethodRuleGetImpl());
 	}
 
-	public Object invoke(Object bean, Method method, String[] names, Object[] args) throws Exception {
+	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, RuleStateChain ruleStateChain) throws Exception {
 		for (MethodRule rule : list) {
-			Object value = rule.invoke(bean, method, names, args);
-			if (rule.isChecked()) {
-				return value;
+			RuleState state = rule.invoke(bean, method, names, args, ruleStateChain);
+			if (state == null) {
+				continue;
 			}
+			ruleStateChain.add(state);
+			if (state.isStop()) {
+				return state;
+			}
+		}
+		if (ruleStateChain.getLastVerifiedRuleState() != null) {
+			return ruleStateChain.getLastVerifiedRuleState();
 		}
 		throw new UnsupportedOperationException("方法[" + method.toGenericString() + "]找不到自动单元测试规则.");
 	}
-
-	@Override
-	public void start() {
-		for (MethodRule rule : list) {
-			rule.start();
-		}
-	}
-
-	@Override
-	public boolean isChecked() {
-		return true;
-	}
-
 }

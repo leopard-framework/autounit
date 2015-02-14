@@ -33,6 +33,11 @@ public class InjectImpl implements Inject {
 		return false;
 	}
 
+	/**
+	 * 获取所有自定义规则
+	 * 
+	 * @return
+	 */
 	protected List<Inject> listCustomRule() {
 		List<Properties> propList;
 		try {

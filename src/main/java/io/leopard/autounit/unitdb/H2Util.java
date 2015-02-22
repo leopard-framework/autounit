@@ -9,11 +9,14 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 public class H2Util {
 
 	public static DataSource createDataSource(String database) {
+
+		String tmpdir = System.getProperty("java.io.tmpdir");
+		tmpdir = tmpdir.replace("\\", "/");
+		System.out.println("tmpdir:" + tmpdir);
+
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
-		// String jdbcUrl = "jdbc:h2:/log/resin/h2/" + project;
-		// jdbcUrl += ";lock_mode=0";
-		String jdbcUrl = "jdbc:h2:tcp://localhost/mem:" + database;
-		// jdbcUrl += ";MVCC=true";
+		String jdbcUrl = "jdbc:h2:" + tmpdir + "autounit/" + database;
+		// String jdbcUrl = "jdbc:h2:tcp://localhost/mem:" + database;
 		dataSource.setJdbcUrl(jdbcUrl);// MVCC=true
 		try {
 			dataSource.setDriverClass("org.h2.Driver");
@@ -35,5 +38,5 @@ public class H2Util {
 		}
 		return dataSource;
 	}
-	
+
 }

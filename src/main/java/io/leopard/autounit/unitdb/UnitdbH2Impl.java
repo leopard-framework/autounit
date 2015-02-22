@@ -1,7 +1,5 @@
 package io.leopard.autounit.unitdb;
 
-import java.sql.DriverManager;
-
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,8 +9,7 @@ public class UnitdbH2Impl implements Unitdb {
 	private JdbcTemplate jdbcTemplate;
 
 	public void setDataSource(DataSource dataSource) {
-		
-		
+
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 

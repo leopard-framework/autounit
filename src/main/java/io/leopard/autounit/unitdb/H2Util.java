@@ -12,7 +12,7 @@ public class H2Util {
 
 		String tmpdir = System.getProperty("java.io.tmpdir");
 		tmpdir = tmpdir.replace("\\", "/");
-		System.out.println("tmpdir:" + tmpdir);
+		// System.out.println("tmpdir:" + tmpdir);
 
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
 		String jdbcUrl = "jdbc:h2:" + tmpdir + "autounit/" + database;

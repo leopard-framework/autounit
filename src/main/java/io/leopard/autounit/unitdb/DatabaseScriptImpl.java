@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
 import org.springframework.util.StringUtils;
 
 public class DatabaseScriptImpl implements DatabaseScript {
@@ -113,12 +114,29 @@ public class DatabaseScriptImpl implements DatabaseScript {
 		throw new IllegalArgumentException("解析表名出错.");
 	}
 
-	@Override
-	public boolean populate(String sql, boolean dropTable) {
+	protected void dropTable(String tableName) {
+		String sql = "DROP TABLE IF EXISTS `" + tableName + "`;";
 		Resource scripts = new ByteArrayResource(sql.getBytes());
 		DatabasePopulator populator = new ResourceDatabasePopulator(scripts);
 		DatabasePopulatorUtils.execute(populator, dataSource);
-		return true;
+	}
+
+	@Override
+	public boolean populate(String sql, boolean dropTable) {
+		if (dropTable) {
+			String tableName = this.parseTableName(sql);
+			this.dropTable(tableName);
+		}
+		Resource scripts = new ByteArrayResource(sql.getBytes());
+		DatabasePopulator populator = new ResourceDatabasePopulator(scripts);
+		try {
+			DatabasePopulatorUtils.execute(populator, dataSource);
+			return true;
+		}
+		catch (ScriptStatementFailedException e) {
+			return false;
+		}
+
 	}
 
 }

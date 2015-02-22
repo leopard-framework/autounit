@@ -1,13 +1,9 @@
 package io.leopard.autounit.unitdb;
 
-import java.io.RandomAccessFile;
-
 import javax.sql.DataSource;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DatabaseScriptImplTest {
 
@@ -27,14 +23,9 @@ public class DatabaseScriptImplTest {
 
 	@Test
 	public void populate() {
-
-		String tmpdir = System.getProperty("java.io.tmpdir");
-		System.out.println("tmpdir:" + tmpdir);
 		DataSource dataSource = H2Util.createDataSource("autounit");
 		this.databaseScriptImpl.setDataSource(dataSource);
-		databaseScriptImpl.populate(MemcacheEntity.class, "memcache");
+		Assert.assertTrue(databaseScriptImpl.populate(MemcacheEntity.class, "memcache", true));
 		System.out.println("ok");
-		((ComboPooledDataSource) dataSource).close(true);
 	}
-
 }

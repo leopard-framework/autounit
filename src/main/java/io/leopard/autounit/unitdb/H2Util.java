@@ -1,6 +1,8 @@
 package io.leopard.autounit.unitdb;
 
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -36,7 +38,15 @@ public class H2Util {
 			// dataSource.setMaxIdleTime(7200);
 			// dataSource.setMaxStatements(0);
 		}
-		return dataSource;
+
+		return new DataSourceProxy(dataSource) {
+			@Override
+			public Connection getConnection() throws SQLException {
+				Connection conn = super.getConnection();
+				conn.setAutoCommit(false);
+				return conn;
+			}
+		};
 	}
 
 }

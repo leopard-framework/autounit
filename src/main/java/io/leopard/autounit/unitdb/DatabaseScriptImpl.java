@@ -21,10 +21,6 @@ import org.springframework.util.StringUtils;
 public class DatabaseScriptImpl implements DatabaseScript {
 	private DataSource dataSource;
 
-	public DatabaseScriptImpl() {
-
-	}
-
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
@@ -137,6 +133,12 @@ public class DatabaseScriptImpl implements DatabaseScript {
 			return false;
 		}
 
+	}
+
+	public static boolean populate(DataSource dataSource, Class<?> entityClazz, String tableName) {
+		DatabaseScriptImpl databaseScript = new DatabaseScriptImpl();
+		databaseScript.setDataSource(dataSource);
+		return databaseScript.populate(entityClazz, tableName);
 	}
 
 }

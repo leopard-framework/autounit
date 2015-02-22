@@ -1,6 +1,5 @@
 package io.leopard.autounit;
 
-import io.leopard.autounit.inject.Inject;
 import io.leopard.autounit.inject.InjectImpl;
 
 import java.lang.reflect.Field;
@@ -16,7 +15,7 @@ import javassist.util.proxy.MethodHandler;
 public class AutoUnit {
 
 	public static <T> T mock(Class<T> clazz) {
-		Inject inject = new InjectImpl();
+		InjectImpl inject = new InjectImpl();
 		T bean;
 		try {
 			bean = clazz.newInstance();

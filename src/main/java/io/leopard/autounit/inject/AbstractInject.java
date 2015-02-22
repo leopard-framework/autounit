@@ -34,4 +34,19 @@ public abstract class AbstractInject implements Inject {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
+
+	protected boolean isNeedSetValue(Object bean, Field field, Class<?> type) {
+		if (!field.getType().equals(type)) {
+			return false;
+		}
+
+		{// 判断是否已经有值
+			Object value = getFieldValue(bean, field);
+			if (value != null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

@@ -32,7 +32,7 @@ public class H2Util {
 		{
 			dataSource.setInitialPoolSize(1);
 			dataSource.setMinPoolSize(1);
-			dataSource.setMaxPoolSize(3);
+			dataSource.setMaxPoolSize(5);
 			dataSource.setAcquireIncrement(1);
 			// dataSource.setAcquireRetryAttempts(1);
 			// dataSource.setMaxIdleTime(7200);

@@ -1,5 +1,7 @@
 package io.leopard.autounit;
 
+import javax.sql.DataSource;
+
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -13,6 +15,7 @@ public class AutoUnitRunner extends BlockJUnit4ClassRunner {
 
 	@Override
 	protected Statement methodBlock(FrameworkMethod method) {
+		DataSource dataSource = null;
 		System.err.println("methodBlock start:" + method.getName());
 		Statement statement = super.methodBlock(method);
 		System.err.println("methodBlock end:" + method.getName());

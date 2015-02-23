@@ -39,6 +39,9 @@ public class H2Util {
 			// dataSource.setMaxStatements(0);
 		}
 
+		if (true) {
+			return dataSource;
+		}
 		return new DataSourceProxy(dataSource) {
 			@Override
 			public Connection getConnection() throws SQLException {

@@ -35,7 +35,6 @@ public class AddMethodHuman implements MethodHuman {
 		if (addMethod == null) {
 			return null;
 		}
-		System.err.println("addMethod:" + addMethod.toGenericString());
 		// System.err.println("type:" + addMethod.getParameterTypes()[0]);
 		Object arg = Tson.toObject(addMethod.getParameterTypes()[0], tson, names, args);
 
@@ -44,7 +43,7 @@ public class AddMethodHuman implements MethodHuman {
 		if (log) {
 			// System.err.println("call:" + addMethod.toGenericString());
 			// System.err.println("result:" + result);
-			AutoUnitLog.log(addMethod, args, result);
+			AutoUnitLog.log(addMethod, result, arg);
 		}
 		boolean success = (Boolean) result;
 		Assert.assertTrue("调用add方法没有返回true.", success);

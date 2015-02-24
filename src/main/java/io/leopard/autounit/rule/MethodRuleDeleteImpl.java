@@ -19,7 +19,7 @@ public class MethodRuleDeleteImpl extends AbstractMethodRule {
 		Object result = method.invoke(bean, args);
 
 		if (ruleStateChain.isLog()) {
-			AutoUnitLog.log(method, args, result);
+			AutoUnitLog.log(method, result, args);
 		}
 		return new RuleState(this, result);
 	}

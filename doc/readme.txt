@@ -5,3 +5,8 @@ AutoUnit(全自动化单元测试框架)，默认支持MySQL(Spring Jdbc、Ibati
 4、使用Tson简化POJO构造
 5、支持自定义方法识别(MethodHuman)，方法类型有add、get、getXxx、delete、count、list、listXxx。
 6、支持验证日志输出
+
+
+待开发功能
+1、事务回滚
+2、对整个类、package的测试

@@ -12,7 +12,7 @@ import javassist.util.proxy.MethodHandler;
 
 public class MethodHandlerImpl implements MethodHandler {
 
-	private MethodRule methodRule = new MethodRuleImpl();
+	private static MethodRule methodRule = new MethodRuleImpl();
 	private final Object bean;
 
 	private Map<String, String> tson;

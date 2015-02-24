@@ -45,13 +45,19 @@ public class DatabaseScriptImpl implements DatabaseScript {
 	protected String toDataType(Field field) {
 		Class<?> type = field.getType();
 		if (type.equals(int.class) || type.equals(Integer.class)) {
-			return "int(10) unsigned NOT NULL 0,";
+			return "int(10) unsigned NOT NULL DEFAULT 0,";
 		}
 		else if (type.equals(long.class) || type.equals(Long.class)) {
-			return "int(11) unsigned NOT NULL 0,";
+			return "int(11) unsigned NOT NULL DEFAULT 0,";
+		}
+		else if (type.equals(float.class) || type.equals(Float.class)) {
+			return "DECIMAL(10, 6) NOT NULL DEFAULT 0.0,";
+		}
+		else if (type.equals(double.class) || type.equals(Double.class)) {
+			return "DECIMAL(10, 6) NOT NULL DEFAULT 0.0,";
 		}
 		else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
-			return "tinyint unsigned NOT NULL 0,";
+			return "tinyint unsigned NOT NULL DEFAULT 0,";
 		}
 		else if (type.equals(String.class)) {
 			return "varchar(255) NOT NULL DEFAULT '',";
@@ -59,7 +65,7 @@ public class DatabaseScriptImpl implements DatabaseScript {
 		else if (type.equals(Date.class)) {
 			return "datetime NOT NULL DEFAULT '1970-01-01 00:00:00',";
 		}
-		throw new IllegalArgumentException("未知数据类型.");
+		throw new IllegalArgumentException("未知数据类型[" + type.getName() + "].");
 	}
 
 	protected String generateSql(Class<?> entityClazz, String tableName) {
@@ -123,6 +129,7 @@ public class DatabaseScriptImpl implements DatabaseScript {
 			String tableName = this.parseTableName(sql);
 			this.dropTable(tableName);
 		}
+		// System.err.println(sql);
 		Resource scripts = new ByteArrayResource(sql.getBytes());
 		DatabasePopulator populator = new ResourceDatabasePopulator(scripts);
 		try {
@@ -130,6 +137,7 @@ public class DatabaseScriptImpl implements DatabaseScript {
 			return true;
 		}
 		catch (ScriptStatementFailedException e) {
+			// e.printStackTrace();
 			return false;
 		}
 

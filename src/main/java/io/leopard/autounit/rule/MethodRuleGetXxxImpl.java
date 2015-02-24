@@ -6,12 +6,18 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class MethodRuleGetImpl extends AbstractMethodRule {
+public class MethodRuleGetXxxImpl extends AbstractMethodRule {
 
-	
+	protected boolean isGetXxxMethod(Method method) {
+		if (method.getName().matches("^get.+$")) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {
-		if (!method.getName().equals("get")) {
+		if (!this.isGetXxxMethod(method)) {
 			return null;
 		}
 
@@ -23,7 +29,6 @@ public class MethodRuleGetImpl extends AbstractMethodRule {
 			// 没有add方法
 			return null;
 		}
-		
 
 		// System.err.println("tson:" + tson);
 		Object arg = Tson.toObject(method.getReturnType(), tson);

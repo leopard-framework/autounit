@@ -13,6 +13,8 @@ public class MethodRuleImpl implements MethodRule {
 		list.add(new MethodRuleGetImpl());
 		list.add(new MethodRuleGetXxxImpl());
 		list.add(new MethodRuleDeleteImpl());
+		list.add(new MethodRuleCountImpl());
+		list.add(new MethodRuleListImpl());
 	}
 
 	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {

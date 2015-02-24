@@ -12,10 +12,15 @@ public class MethodRuleGetImpl extends AbstractMethodRule {
 		if (!method.getName().equals("get")) {
 			return null;
 		}
-
+		if (ruleStateChain.isLog()) {
+			System.err.println("############" + method.toGenericString() + " start###########");
+		}
 		new AddMethodHuman(bean, ruleStateChain.isLog()).invokeAndAssert(tson, names, args);
 
 		Object result = method.invoke(bean, args);
+		if (ruleStateChain.isLog()) {
+			System.err.println("############" + method.toGenericString() + " end###########");
+		}
 		return new RuleState(this, result);
 	}
 

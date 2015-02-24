@@ -14,12 +14,18 @@ public class MethodRuleDeleteImpl extends AbstractMethodRule {
 			return null;
 		}
 
+		if (ruleStateChain.isLog()) {
+			System.err.println("############" + method.toGenericString() + " start###########");
+		}
 		new AddMethodHuman(bean, ruleStateChain.isLog()).invokeAndAssert(tson, names, args);
 
 		Object result = method.invoke(bean, args);
 
 		if (ruleStateChain.isLog()) {
 			AutoUnitLog.log(method, result, args);
+		}
+		if (ruleStateChain.isLog()) {
+			System.err.println("############" + method.toGenericString() + " end###########");
 		}
 		return new RuleState(this, result);
 	}

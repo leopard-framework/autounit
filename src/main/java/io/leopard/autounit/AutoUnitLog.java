@@ -9,7 +9,7 @@ public class AutoUnitLog {
 		System.err.println("call:" + method.toGenericString());
 		System.err.println("args:" + argsToString(args));
 		System.err.println("result:" + result);
-		System.err.println("########################################");
+		System.err.println("---------------------------------------------------");
 	}
 
 	protected static String argsToString(Object... args) {

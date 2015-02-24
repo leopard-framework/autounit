@@ -40,7 +40,7 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 			public int compare(Properties o1, Properties o2) {
 				int order1 = parseOrder((String) o1.get("order"));
 				int order2 = parseOrder((String) o2.get("order"));
-				return (order1 - order2);
+				return (order2 - order1);
 			}
 		});
 		// System.err.println("list:" + list);
@@ -60,6 +60,7 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 		List<InputStream> list = new ArrayList<InputStream>();
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
+			// System.err.println("url:" + url.toString());
 			URLConnection conn = url.openConnection();
 			try {
 				list.add(conn.getInputStream());
@@ -111,6 +112,7 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 			for (Entry<Object, Object> entry : props.entrySet()) {
 				String key = (String) entry.getKey();
 				if (key.startsWith("field.")) {
+					// System.err.println(key + ":" + entry.getValue());
 					String fieldName = key.replaceFirst("^field\\.([0-9a-zA-Z_\\-]+)$", "$1");
 					fieldMap.put(fieldName, (String) entry.getValue());
 				}

@@ -30,7 +30,12 @@ public class FieldValueNameImpl implements FieldValue {
 		if (value == null) {
 			return null;
 		}
-		return TsonDataType.toObject(value, clazz);
+		try {
+			return TsonDataType.toObject(value, clazz);
+		}
+		catch (RuntimeException e) {
+			throw new RuntimeException(e.getMessage() + " name:" + name, e);
+		}
 	}
 
 }

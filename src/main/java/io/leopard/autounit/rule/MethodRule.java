@@ -1,6 +1,7 @@
 package io.leopard.autounit.rule;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * 方法验证规则.
@@ -26,5 +27,5 @@ public interface MethodRule {
 	 * @return
 	 * @throws Exception
 	 */
-	RuleState invoke(Object bean, Method method, String[] names, Object[] args, RuleStateChain ruleStateChain) throws Exception;
+	RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception;
 }

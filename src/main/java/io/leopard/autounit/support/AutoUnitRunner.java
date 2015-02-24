@@ -63,9 +63,9 @@ public class AutoUnitRunner extends BlockJUnit4ClassRunner {
 
 	@Override
 	protected Statement methodBlock(FrameworkMethod method) {
-		System.err.println("methodBlock start:" + method.getName());
+		// System.err.println("methodBlock start:" + method.getName());
 		Statement statement = super.methodBlock(method);
-		System.err.println("methodBlock end:" + method.getName());
+		// System.err.println("methodBlock end:" + method.getName());
 		return statement;
 
 	}

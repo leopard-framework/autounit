@@ -4,11 +4,12 @@ import io.leopard.autounit.tson.Tson;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 public class MethodRuleGetImpl extends AbstractMethodRule {
 
 	@Override
-	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, RuleStateChain ruleStateChain) throws Exception {
+	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {
 		if (!method.getName().equals("get")) {
 			return null;
 		}
@@ -22,7 +23,8 @@ public class MethodRuleGetImpl extends AbstractMethodRule {
 			return null;
 		}
 
-		Object arg = Tson.toObject(method.getReturnType(), "");
+		System.err.println("tson:" + tson);
+		Object arg = Tson.toObject(method.getReturnType(), tson);
 
 		System.out.println("names:" + names[0] + " clazz:" + method.getReturnType());
 		Field field = method.getReturnType().getDeclaredField(names[0]);

@@ -98,7 +98,7 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 				else {
 					continue;
 				}
-				map.put(order, (String) entry.getValue());
+				map.put(order, ((String) entry.getValue()).trim());
 			}
 			classNameList.addAll(map.values());
 		}
@@ -114,7 +114,7 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 				if (key.startsWith("field.")) {
 					// System.err.println(key + ":" + entry.getValue());
 					String fieldName = key.replaceFirst("^field\\.([0-9a-zA-Z_\\-]+)$", "$1");
-					fieldMap.put(fieldName, (String) entry.getValue());
+					fieldMap.put(fieldName, ((String) entry.getValue()).trim());
 				}
 				else {
 					continue;

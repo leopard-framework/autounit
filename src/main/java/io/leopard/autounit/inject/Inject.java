@@ -10,5 +10,12 @@ import java.lang.reflect.Field;
  */
 public interface Inject {
 
-	boolean inject(Object bean, Field field);
+	Inject inject(Object bean, Field field);
+
+	/**
+	 * 清空数据.
+	 * 
+	 * @return
+	 */
+	boolean clean();
 }

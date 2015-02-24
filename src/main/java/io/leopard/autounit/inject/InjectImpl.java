@@ -19,14 +19,14 @@ public class InjectImpl implements Inject {
 	}
 
 	@Override
-	public boolean inject(Object bean, Field field) {
+	public Inject inject(Object bean, Field field) {
 		for (Inject inject : list) {
-			boolean success = inject.inject(bean, field);
-			if (success) {
-				return true;
+			Inject inject2 = inject.inject(bean, field);
+			if (inject2 != null) {
+				return inject2;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	/**
@@ -60,6 +60,11 @@ public class InjectImpl implements Inject {
 			}
 		}
 		return ruleList;
+	}
+
+	@Override
+	public boolean clean() {
+		throw new UnsupportedOperationException("Not Impl.");
 	}
 
 }

@@ -66,6 +66,10 @@ public class AutoUnit {
 	}
 
 	public static <T> T dao(T bean) {
-		return new BeanStubber("").dao(bean);
+		return dao(bean, false);
+	}
+
+	public static <T> T dao(T bean, boolean log) {
+		return new BeanStubber("").dao(bean, log);
 	}
 }

@@ -8,7 +8,21 @@ public class RuleStateChain {
 	private List<RuleState> allList = new ArrayList<RuleState>();
 	private List<RuleState> verifiedList = new ArrayList<RuleState>();
 
+	private boolean log;
+
 	private RuleState lastVerifiedRuleState;
+
+	public RuleStateChain(boolean log) {
+		this.log = log;
+	}
+
+	public boolean isLog() {
+		return log;
+	}
+
+	public void setLog(boolean log) {
+		this.log = log;
+	}
 
 	public void add(RuleState state) {
 		allList.add(state);

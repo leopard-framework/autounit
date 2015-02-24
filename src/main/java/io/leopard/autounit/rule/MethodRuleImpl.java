@@ -10,9 +10,9 @@ public class MethodRuleImpl implements MethodRule {
 	private List<MethodRule> list = new ArrayList<MethodRule>();
 
 	public MethodRuleImpl() {
-		list.add(new MethodRuleIGetImpl());
 		list.add(new MethodRuleGetImpl());
 		list.add(new MethodRuleGetXxxImpl());
+		list.add(new MethodRuleDeleteImpl());
 	}
 
 	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {

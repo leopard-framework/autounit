@@ -21,27 +21,33 @@ public class BeanStubber {
 	}
 
 	public <T> T dao(T bean) {
+		return this.dao(bean, false);
+	}
+
+	public <T> T dao(T bean, boolean log) {
 		@SuppressWarnings("unchecked")
 		Class<T> clazz = (Class<T>) bean.getClass();
-		T proxy = ClassProxy.newProxyInstance(clazz, new MethodHandlerImpl(bean, Tson.toMap(tson)));
+		T proxy = ClassProxy.newProxyInstance(clazz, new MethodHandlerImpl(bean, log, Tson.toMap(tson)));
 		return proxy;
 	}
 
 	public class MethodHandlerImpl implements MethodHandler {
 
 		private final Object bean;
+		private boolean log;
 
 		private Map<String, String> tson;
 
-		public MethodHandlerImpl(final Object bean, Map<String, String> tson) {
+		public MethodHandlerImpl(final Object bean, boolean log, Map<String, String> tson) {
 			this.bean = bean;
+			this.log = log;
 			this.tson = tson;
 		}
 
 		@Override
 		public Object invoke(Object self, Method thisMethod, Method proceed, Object[] args) throws Throwable {
 			String[] names = CtClassUtil.getParameterNames(thisMethod);
-			RuleState state = methodRule.invoke(bean, thisMethod, names, args, tson, new RuleStateChain());
+			RuleState state = methodRule.invoke(bean, thisMethod, names, args, tson, new RuleStateChain(log));
 			return state.getResult();
 		}
 

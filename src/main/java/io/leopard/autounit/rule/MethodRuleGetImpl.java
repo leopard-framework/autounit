@@ -1,5 +1,7 @@
 package io.leopard.autounit.rule;
 
+import io.leopard.autounit.rule.human.AddMethodHuman;
+
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -11,19 +13,7 @@ public class MethodRuleGetImpl extends AbstractMethodRule {
 			return null;
 		}
 
-		Method addMethod;
-		try {
-			addMethod = bean.getClass().getDeclaredMethod("add", method.getReturnType());
-		}
-		catch (NoSuchMethodException e) {
-			// 没有add方法
-			return null;
-		}
-
-		// System.err.println("tson:" + tson);
-		Object arg = toObject(method.getReturnType(), tson, names, args);
-
-		addMethod.invoke(bean, arg);
+		new AddMethodHuman(bean, ruleStateChain.isLog()).invokeAndAssert(tson, names, args);
 
 		Object result = method.invoke(bean, args);
 		return new RuleState(this, result);

@@ -1,15 +1,11 @@
 package io.leopard.autounit.inject;
 
-import io.leopard.autounit.AutounitProperties;
+import io.leopard.autounit.config.AutoUnitConfigImpl;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.TreeMap;
 
 public class InjectImpl implements Inject {
 
@@ -39,16 +35,12 @@ public class InjectImpl implements Inject {
 	 * @return
 	 */
 	protected List<Inject> listCustomRule() {
-		List<Properties> propList;
+		List<String> classNameList;
 		try {
-			propList = AutounitProperties.list();
+			classNameList = new AutoUnitConfigImpl().listRule();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
-		}
-		List<String> classNameList = new ArrayList<String>();
-		for (Properties props : propList) {
-			classNameList.addAll(this.listCustomRule(props));
 		}
 		List<Inject> ruleList = new ArrayList<Inject>();
 		for (String className : classNameList) {
@@ -70,28 +62,4 @@ public class InjectImpl implements Inject {
 		return ruleList;
 	}
 
-	protected Collection<String> listCustomRule(Properties props) {
-		TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-		for (Entry<Object, Object> entry : props.entrySet()) {
-			String key = (String) entry.getKey();
-			int order;
-			if ("inject".equals(key)) {
-				order = Integer.MAX_VALUE;
-			}
-			else if (key.startsWith("inject.")) {
-				String str = key.replaceFirst("^inject\\.([0-9]+)$", "$1");
-				if (str.equals(key)) {
-					continue;
-				}
-				else {
-					order = Integer.parseInt(str);
-				}
-			}
-			else {
-				continue;
-			}
-			map.put(order, (String) entry.getValue());
-		}
-		return map.values();
-	}
 }

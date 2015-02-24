@@ -9,6 +9,8 @@ public class FieldValueImpl implements FieldValue {
 	private List<FieldValue> list = new ArrayList<FieldValue>();
 
 	public FieldValueImpl() {
+		list.add(new FieldValueNameImpl());
+
 		list.add(new FieldValueIntegerImpl());
 
 		list.add(new FieldValueLongImpl());

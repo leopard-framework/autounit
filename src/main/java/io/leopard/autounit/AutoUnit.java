@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public class AutoUnit {
 
-	public static void setPrivateTson(String tson) {
-
-	}
+	// public static void setPrivateTson(String tson) {
+	//
+	// }
 
 	/**
 	 * 清空数据.

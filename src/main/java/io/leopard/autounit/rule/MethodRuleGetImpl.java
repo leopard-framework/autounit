@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class MethodRuleGetImpl extends AbstractMethodRule {
 
+	
 	@Override
 	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {
 		if (!method.getName().equals("get")) {
@@ -23,12 +24,12 @@ public class MethodRuleGetImpl extends AbstractMethodRule {
 			return null;
 		}
 
-		System.err.println("tson:" + tson);
+		// System.err.println("tson:" + tson);
 		Object arg = Tson.toObject(method.getReturnType(), tson);
 
-		System.out.println("names:" + names[0] + " clazz:" + method.getReturnType());
+		// System.out.println("names:" + names[0] + " clazz:" + method.getReturnType());
 		Field field = method.getReturnType().getDeclaredField(names[0]);
-		System.out.println("names:" + names[0] + " field:" + args[0]);
+		// System.out.println("names:" + names[0] + " field:" + args[0]);
 		field.setAccessible(true);
 		field.set(arg, args[0]);
 

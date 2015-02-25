@@ -23,8 +23,12 @@ public class AutoUnit {
 	//
 	// }
 
-	public static void assertBean(Object bean) {
+	public static void assertBean(Class<?> clazz) {
+		BeanAssert.assertBean(mock(clazz));
+	}
 
+	public static void assertBean(Class<?> clazz, boolean log) {
+		BeanAssert.assertBean(mock(clazz), log);
 	}
 
 	/**

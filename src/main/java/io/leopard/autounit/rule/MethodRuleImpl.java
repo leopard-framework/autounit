@@ -10,6 +10,7 @@ public class MethodRuleImpl implements MethodRule {
 	private List<MethodRule> list = new ArrayList<MethodRule>();
 
 	public MethodRuleImpl() {
+		list.add(new MethodRuleAddImpl());
 		list.add(new MethodRuleGetImpl());
 		list.add(new MethodRuleGetXxxImpl());
 		list.add(new MethodRuleDeleteImpl());

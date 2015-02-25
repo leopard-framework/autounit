@@ -3,8 +3,11 @@ package io.leopard.autounit;
 import io.leopard.autounit.inject.Inject;
 import io.leopard.autounit.inject.InjectContext;
 import io.leopard.autounit.inject.InjectImpl;
+import io.leopard.autounit.unitdb.ConnectionContext;
 
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,20 @@ public class AutoUnit {
 	}
 
 	/**
+	 * 回滚测试数据。
+	 */
+	public static void rollabck() {
+		for (Connection conn : ConnectionContext.list()) {
+			try {
+				conn.rollback();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
 	 * 清空数据.
 	 * 
 	 * @param bean
@@ -42,8 +59,14 @@ public class AutoUnit {
 	private static Map<Integer, InjectContext> injectContextMap = new HashMap<Integer, InjectContext>();
 	private static InjectImpl inject = new InjectImpl();
 
+	private static Map<Integer, Object> beanMap = new HashMap<Integer, Object>();
+
 	public static <T> T mock(Class<T> clazz) {
-		T bean;
+		@SuppressWarnings("unchecked")
+		T bean = (T) beanMap.get(clazz.hashCode());
+		if (bean != null) {
+			return bean;
+		}
 		try {
 			bean = clazz.newInstance();
 		}
@@ -62,11 +85,21 @@ public class AutoUnit {
 			}
 		}
 		injectContextMap.put(bean.hashCode(), context);
+		beanMap.put(clazz.hashCode(), bean);
 		return bean;
 	}
 
 	public static BeanStubber tson(String tson) {
 		return new BeanStubber(tson);
+	}
+
+	public static <T> T dao(Class<T> clazz) {
+		return dao(clazz, false);
+	}
+
+	public static <T> T dao(Class<T> clazz, boolean log) {
+		T bean = mock(clazz);
+		return dao(bean, log);
 	}
 
 	public static <T> T dao(T bean) {

@@ -20,6 +20,10 @@ public class AutoUnit {
 	//
 	// }
 
+	public static void assertBean(Object bean) {
+
+	}
+
 	/**
 	 * 清空数据.
 	 * 
@@ -36,9 +40,9 @@ public class AutoUnit {
 	}
 
 	private static Map<Integer, InjectContext> injectContextMap = new HashMap<Integer, InjectContext>();
+	private static InjectImpl inject = new InjectImpl();
 
 	public static <T> T mock(Class<T> clazz) {
-		InjectImpl inject = new InjectImpl();
 		T bean;
 		try {
 			bean = clazz.newInstance();

@@ -46,8 +46,10 @@ public class BeanStubber {
 
 		@Override
 		public Object invoke(Object self, Method thisMethod, Method proceed, Object[] args) throws Throwable {
+			AutoUnit.rollabck();
 			String[] names = CtClassUtil.getParameterNames(thisMethod);
 			RuleState state = methodRule.invoke(bean, thisMethod, names, args, tson, new RuleStateChain(log));
+			AutoUnit.rollabck();
 			return state.getResult();
 		}
 

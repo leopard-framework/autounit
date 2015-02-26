@@ -16,11 +16,14 @@ public class ModuleParserLeiImpl implements ModuleParserLei {
 		// URL url = ClassLoader.getSystemResource(".").toString();
 		String path;
 		try {
-			path = this.getClass().getClassLoader().getResources(".").toString();
+			// this.getClass().getClassLoader().getResources(".").nextElement().toString()
+			// TODO 使用jar包可能会有问题
+			path = this.getClass().getClassLoader().getResources(".").nextElement().toString();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}// ClassLoaderUtil.getCurrentPath();
+		System.err.println("path:" + path);
 		path = path.replaceFirst("file:/[A-Z]:/", "/");
 		path = path.replaceFirst("file:/", "/");
 		int index = path.indexOf("/target/");

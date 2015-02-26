@@ -23,4 +23,9 @@ public class AutoUnitConfigImpl implements AutoUnitConfig {
 		return autoUnitConfigFileImpl.mapField();
 	}
 
+	@Override
+	public List<String> listIntegrationRunnable() throws IOException {
+		return autoUnitConfigFileImpl.listIntegrationRunnable();
+	}
+
 }

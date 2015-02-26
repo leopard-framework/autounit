@@ -11,6 +11,14 @@ public interface AutoUnitConfig {
 
 	List<String> listRule() throws IOException;
 
+	/**
+	 * 获取集成测试时要运行的类.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	List<String> listIntegrationRunnable() throws IOException;
+
 	Map<String, String> mapField() throws IOException;
 
 }

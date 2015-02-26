@@ -1,5 +1,10 @@
 package io.leopard.autounit.test;
 
+import io.leopard.autounit.config.AutoUnitConfigImpl;
+
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextLoader;
@@ -19,12 +24,26 @@ public class TestContextLoader implements ContextLoader {
 
 	@Override
 	public ApplicationContext loadContext(String... locations) throws Exception {
-		// new HostLeiImpl();
+
+		List<String> classNameList;
+		try {
+			classNameList = new AutoUnitConfigImpl().listIntegrationRunnable();
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+
+		for (String className : classNameList) {
+			@SuppressWarnings("unchecked")
+			Class<Runnable> clazz = (Class<Runnable>) Class.forName(className);
+			clazz.newInstance().run();
+		}
+
 		if (locations.length == 0) {
 			locations = new ApplicationContextLocationImpl().get();
 		}
 		// files = ArrayUtil.insertFirst(files, "/leopard-test/annotation-config.xml");
-		locations = StringUtils.addStringToArray(locations, "/leopard-test/annotation-config.xml");
+		locations = StringUtils.addStringToArray(locations, "/autounit/annotation-config.xml");
 
 		return new ClassPathXmlApplicationContext(locations);
 	}

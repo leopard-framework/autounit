@@ -75,19 +75,18 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 		return list;
 	}
 
-	@Override
-	public List<String> listRule() throws IOException {
+	protected List<String> listClassName(String prefix) throws IOException {
 		List<String> classNameList = new ArrayList<String>();
 		for (Properties props : list()) {
 			TreeMap<Integer, String> map = new TreeMap<Integer, String>();
 			for (Entry<Object, Object> entry : props.entrySet()) {
 				String key = (String) entry.getKey();
 				int order;
-				if ("inject".equals(key)) {
+				if (prefix.equals(key)) {
 					order = Integer.MAX_VALUE;
 				}
-				else if (key.startsWith("inject.")) {
-					String str = key.replaceFirst("^inject\\.([0-9]+)$", "$1");
+				else if (key.startsWith(prefix + ".")) {
+					String str = key.replaceFirst("^" + prefix + "\\.([0-9]+)$", "$1");
 					if (str.equals(key)) {
 						continue;
 					}
@@ -103,6 +102,16 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 			classNameList.addAll(map.values());
 		}
 		return classNameList;
+	}
+
+	@Override
+	public List<String> listRule() throws IOException {
+		return this.listClassName("inject");
+	}
+
+	@Override
+	public List<String> listIntegrationRunnable() throws IOException {
+		return this.listClassName("integration.run");
 	}
 
 	@Override
@@ -123,4 +132,5 @@ public class AutoUnitConfigFileImpl implements AutoUnitConfig {
 		}
 		return fieldMap;
 	}
+
 }

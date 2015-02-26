@@ -103,14 +103,15 @@ public class AutoUnit {
 
 	public static <T> T dao(Class<T> clazz, boolean log) {
 		T bean = mock(clazz);
-		return dao(bean, log);
-	}
-
-	public static <T> T dao(T bean) {
-		return dao(bean, false);
-	}
-
-	public static <T> T dao(T bean, boolean log) {
+		// return dao(bean, log);
 		return new BeanStubber("").dao(bean, log);
 	}
+
+	// public static <T> T dao(T bean) {
+	// return dao(bean, false);
+	// }
+	//
+	// public static <T> T dao(T bean, boolean log) {
+	// return new BeanStubber("").dao(bean, log);
+	// }
 }

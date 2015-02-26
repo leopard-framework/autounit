@@ -4,11 +4,9 @@ import org.junit.Test;
 
 public class AutoUnitTest {
 
-	private UserDao userDao = new UserDao();
-
 	@Test
 	public void dao() {
-		AutoUnit.dao(userDao).get(1);
+		AutoUnit.dao(UserDao.class).get(1);
 	}
 
 }

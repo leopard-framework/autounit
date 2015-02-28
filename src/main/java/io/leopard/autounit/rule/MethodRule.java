@@ -1,7 +1,5 @@
 package io.leopard.autounit.rule;
 
-import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * 方法验证规则.
@@ -14,18 +12,10 @@ public interface MethodRule {
 	/**
 	 * 方法验证.
 	 * 
-	 * @param bean
-	 *            被测试的bean
-	 * @param method
-	 *            被测试方法
-	 * @param names
-	 *            方法名称数组
-	 * @param args
-	 *            方法参数值数组
-	 * @param ruleStateChain
-	 *            规则调用链
+	 * @param unitMethod
+	 *            被测试的方法信息
 	 * @return
 	 * @throws Exception
 	 */
-	RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception;
+	RuleState invoke(UnitMethod unitMethod, RuleStateChain ruleStateChain) ;
 }

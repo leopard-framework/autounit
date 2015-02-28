@@ -1,24 +1,26 @@
 package io.leopard.autounit.rule;
 
-import io.leopard.autounit.rule.human.AddMethodHuman;
-
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 
 public class MethodRuleListImpl extends AbstractMethodRule {
+	private MethodTemplate methodTemplate = new MethodTemplateImpl();
 
 	@Override
-	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {
-		if (!method.getName().equals("list")) {
+	public RuleState invoke(UnitMethod unitMethod, RuleStateChain ruleStateChain) {
+		if (!unitMethod.getName().equals("list")) {
 			return null;
 		}
 		if (ruleStateChain.isLog()) {
-			System.err.println("############" + method.toGenericString() + " start###########");
+			System.err.println("############" + unitMethod.toGenericString() + " start###########");
 		}
-		new AddMethodHuman(bean, ruleStateChain.isLog()).invokeAndAssert(tson, names, args);
+		try {
+			methodTemplate.add(unitMethod, ruleStateChain.isLog());
+		}
+		catch (NoSuchMethodException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 
-		Object result = method.invoke(bean, args);
+		Object result = unitMethod.invoke();
 
 		List<?> list = (List<?>) result;
 		if (list == null || list.size() <= 0) {
@@ -26,7 +28,7 @@ public class MethodRuleListImpl extends AbstractMethodRule {
 		}
 
 		if (ruleStateChain.isLog()) {
-			System.err.println("############" + method.toGenericString() + " end###########");
+			System.err.println("############" + unitMethod.toGenericString() + " end###########");
 		}
 		return new RuleState(this, result);
 	}

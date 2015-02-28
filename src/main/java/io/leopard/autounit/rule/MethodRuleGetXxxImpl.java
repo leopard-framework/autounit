@@ -1,32 +1,34 @@
 package io.leopard.autounit.rule;
 
-import io.leopard.autounit.rule.human.AddMethodHuman;
-
-import java.lang.reflect.Method;
-import java.util.Map;
 
 public class MethodRuleGetXxxImpl extends AbstractMethodRule {
+	private MethodTemplate methodTemplate = new MethodTemplateImpl();
 
-	protected boolean isGetXxxMethod(Method method) {
-		if (method.getName().matches("^get.+$")) {
+	protected boolean isGetXxxMethod(UnitMethod unitMethod) {
+		if (unitMethod.getName().matches("^get.+$")) {
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public RuleState invoke(Object bean, Method method, String[] names, Object[] args, Map<String, String> tson, RuleStateChain ruleStateChain) throws Exception {
-		if (!this.isGetXxxMethod(method)) {
+	public RuleState invoke(UnitMethod unitMethod, RuleStateChain ruleStateChain) {
+		if (!this.isGetXxxMethod(unitMethod)) {
 			return null;
 		}
 		if (ruleStateChain.isLog()) {
-			System.err.println("############" + method.toGenericString() + " start###########");
+			System.err.println("############" + unitMethod.toGenericString() + " start###########");
 		}
-		new AddMethodHuman(bean, ruleStateChain.isLog()).invokeAndAssert(tson, names, args);
+		try {
+			this.methodTemplate.add(unitMethod, ruleStateChain.isLog());
+		}
+		catch (NoSuchMethodException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 
-		Object result = method.invoke(bean, args);
+		Object result = unitMethod.invoke();
 		if (ruleStateChain.isLog()) {
-			System.err.println("############" + method.toGenericString() + " end###########");
+			System.err.println("############" + unitMethod.toGenericString() + " end###########");
 		}
 		return new RuleState(this, result);
 	}

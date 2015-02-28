@@ -1,13 +1,15 @@
 package io.leopard.autounit;
 
-import java.lang.reflect.Method;
-import java.util.Map;
-
 import io.leopard.autounit.rule.MethodRule;
 import io.leopard.autounit.rule.MethodRuleImpl;
 import io.leopard.autounit.rule.RuleState;
 import io.leopard.autounit.rule.RuleStateChain;
+import io.leopard.autounit.rule.UnitMethod;
 import io.leopard.autounit.tson.Tson;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+
 import javassist.util.proxy.MethodHandler;
 
 public class BeanStubber {
@@ -48,7 +50,13 @@ public class BeanStubber {
 		public Object invoke(Object self, Method thisMethod, Method proceed, Object[] args) throws Throwable {
 			AutoUnit.rollabck();
 			String[] names = CtClassUtil.getParameterNames(thisMethod);
-			RuleState state = methodRule.invoke(bean, thisMethod, names, args, tson, new RuleStateChain(log));
+			UnitMethod unitMethod = new UnitMethod();
+			unitMethod.setBean(bean);
+			unitMethod.setMethod(thisMethod);
+			unitMethod.setNames(names);
+			unitMethod.setArgs(args);
+			unitMethod.setTson(tson);
+			RuleState state = methodRule.invoke(unitMethod, new RuleStateChain(log));
 			AutoUnit.rollabck();
 			return state.getResult();
 		}

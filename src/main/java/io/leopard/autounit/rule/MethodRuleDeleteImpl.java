@@ -15,12 +15,7 @@ public class MethodRuleDeleteImpl extends AbstractMethodRule {
 			System.err.println("############" + unitMethod.toGenericString() + " start###########");
 		}
 
-		try {
-			methodTemplate.add(unitMethod, ruleStateChain.isLog());
-		}
-		catch (NoSuchMethodException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+		methodTemplate.add(unitMethod, ruleStateChain.isLog());
 
 		Object result = unitMethod.invoke(unitMethod.getArgs());
 

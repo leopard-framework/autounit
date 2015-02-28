@@ -12,12 +12,7 @@ public class MethodRuleCountImpl extends AbstractMethodRule {
 			System.err.println("############" + unitMethod.toGenericString() + " start###########");
 		}
 
-		try {
-			methodTemplate.add(unitMethod, ruleStateChain.isLog());
-		}
-		catch (NoSuchMethodException e) {
-			throw new RuntimeException(e.getMessage());
-		}
+		methodTemplate.add(unitMethod, ruleStateChain.isLog());
 
 		Object result = unitMethod.invoke();
 

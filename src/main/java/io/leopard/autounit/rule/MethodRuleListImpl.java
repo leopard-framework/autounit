@@ -13,12 +13,7 @@ public class MethodRuleListImpl extends AbstractMethodRule {
 		if (ruleStateChain.isLog()) {
 			System.err.println("############" + unitMethod.toGenericString() + " start###########");
 		}
-		try {
-			methodTemplate.add(unitMethod, ruleStateChain.isLog());
-		}
-		catch (NoSuchMethodException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+		methodTemplate.add(unitMethod, ruleStateChain.isLog());
 
 		Object result = unitMethod.invoke();
 

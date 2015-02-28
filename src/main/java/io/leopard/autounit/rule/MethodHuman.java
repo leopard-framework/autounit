@@ -1,12 +1,11 @@
 package io.leopard.autounit.rule;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 public interface MethodHuman {
 
-	Method find(Object bean) throws NoSuchMethodException;
+	Method find(Object bean) throws NoSuchMethodRuntimeException;
 
-	Object invoke(UnitMethod unitMethod, boolean log) throws NoSuchMethodException;
+	Object invoke(UnitMethod unitMethod, boolean log) throws NoSuchMethodRuntimeException;
 
 }

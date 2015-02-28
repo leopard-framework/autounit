@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 public class MethodHumanAddImpl implements MethodHuman {
 
 	@Override
-	public Method find(Object bean) throws NoSuchMethodException {
+	public Method find(Object bean) throws NoSuchMethodRuntimeException {
 		Class<?> clazz = bean.getClass();
 		for (Method method : clazz.getDeclaredMethods()) {
 			// System.out.println(method.isBridge() + "  :  " + method.toGenericString());
@@ -17,11 +17,11 @@ public class MethodHumanAddImpl implements MethodHuman {
 				return method;
 			}
 		}
-		throw new NoSuchMethodException("add");
+		throw new NoSuchMethodRuntimeException("add");
 	}
 
 	@Override
-	public Object invoke(UnitMethod unitMethod, boolean log) throws NoSuchMethodException {
+	public Object invoke(UnitMethod unitMethod, boolean log) throws NoSuchMethodRuntimeException {
 		Method method = this.find(unitMethod.getBean());
 		if (method == null) {
 			return false;

@@ -10,3 +10,5 @@ AutoUnit(全自动化单元测试框架)，默认支持MySQL(Spring Jdbc、Ibati
 待开发功能
 1、事务回滚
 2、对整个类、package的测试
+3、测试报告
+

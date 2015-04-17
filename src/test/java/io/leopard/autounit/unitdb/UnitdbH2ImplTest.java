@@ -12,6 +12,7 @@ public class UnitdbH2ImplTest {
 		DataSource dataSource = H2Util.createDataSource("autounit");
 		unitdb.setDataSource(dataSource);
 
+		
 		String user = unitdb.queryForString("select user()");
 		// String user = unitdb.queryForString("select value from memcache");
 		System.out.println("user:" + user);

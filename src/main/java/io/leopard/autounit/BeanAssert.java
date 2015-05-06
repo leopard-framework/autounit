@@ -21,7 +21,7 @@ public class BeanAssert {
 			}
 			Object[] args = getArgs(method);
 
-//			System.err.println("assertBean:" + method.toGenericString() + " " + args.length);
+			// System.err.println("assertBean:" + method.toGenericString() + " " + args.length);
 			// for (Object arg : args) {
 			// System.err.println("arg:" + arg + " " + arg.getClass().getName());
 			// }
@@ -44,8 +44,7 @@ public class BeanAssert {
 	protected static Object[] getArgs(Method method) {
 		Class<?>[] types = method.getParameterTypes();
 		String[] names = CtClassUtil.getParameterNames(method);
-		
-		Object[] args = new Object[method.getParameterCount()];
+		Object[] args = new Object[types.length];
 		for (int i = 0; i < args.length; i++) {
 			try {
 				args[i] = fieldValue.get(types[i], names[i]);

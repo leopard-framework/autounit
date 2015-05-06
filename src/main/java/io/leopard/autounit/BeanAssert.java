@@ -44,6 +44,7 @@ public class BeanAssert {
 	protected static Object[] getArgs(Method method) {
 		Class<?>[] types = method.getParameterTypes();
 		String[] names = CtClassUtil.getParameterNames(method);
+		
 		Object[] args = new Object[method.getParameterCount()];
 		for (int i = 0; i < args.length; i++) {
 			try {

@@ -4,8 +4,6 @@
 	<artifactId>autounit</artifactId>
 	<version>0.3-SNAPSHOT</version>
 
-
-
 	<name>AutoUnit</name>
 	<description>自动单元测试</description>
 	<url>https://github.com/tanhaichao/autounit</url>

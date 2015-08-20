@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.leopard</groupId>
 	<artifactId>autounit</artifactId>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 
 
 
@@ -18,9 +18,9 @@
 	</parent>
 
 	<scm>
-		<url>https://github.com/tanhaichao/autounit/tags/autounit-0.1</url>
-		<connection>scm:svn:https://github.com/tanhaichao/autounit/tags/autounit-0.1</connection>
-		<developerConnection>scm:svn:https://github.com/tanhaichao/autounit/tags/autounit-0.1</developerConnection>
+		<url>https://github.com/tanhaichao/autounit</url>
+		<connection>scm:svn:https://github.com/tanhaichao/autounit/trunk</connection>
+		<developerConnection>scm:svn:https://github.com/tanhaichao/autounit/trunk</developerConnection>
 	</scm>
 
 	<issueManagement>
